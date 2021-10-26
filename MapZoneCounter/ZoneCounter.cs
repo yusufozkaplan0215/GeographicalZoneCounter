@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Yusuf_Ozkaplan
 {
-    public class ZoneCounter : ZoneCounterInterface
+    public class ZoneCounter
     {
         private MapInterface map;
         private int width;
@@ -14,14 +14,12 @@ namespace Yusuf_Ozkaplan
         int[,] labelMap;
         int label = 1;
         private Stack<int> labelStack;//Verilen etiketler yığında tutulur.
-        public Dictionary<int, LabelStartFinishLocation> dicLabelStartFinishLocation; // Etiketlerin başlangıç ve Bitiş lokasyonları tutulur.
         string mapString = string.Empty;
 
         public ZoneCounter()
         {
             labelStack = new Stack<int>();
             labelStack.Push(label);
-            dicLabelStartFinishLocation = new Dictionary<int, LabelStartFinishLocation>();
         }
 
         // Feeds map data into solution class, then get ready for Solve() method.
@@ -30,7 +28,6 @@ namespace Yusuf_Ozkaplan
             this.map = map;
             int label = 1;
 
-            dicLabelStartFinishLocation.Clear();
             labelStack.Clear();
             labelStack.Push(label);
 
@@ -47,6 +44,7 @@ namespace Yusuf_Ozkaplan
         }
 
         // Counts zones in map provided with Init() method, then return the result.
+        //2x2 lik komşuluk gözden geçirilir ve sonuç bulunur.
         public int Solve()
         {
             mapString = string.Empty;
@@ -62,42 +60,16 @@ namespace Yusuf_Ozkaplan
                         {
                             /// İlk satır Etiketlemesi yapıldı.
                             labelMap[row, column] = label;
-
-                            if (dicLabelStartFinishLocation.ContainsKey(label) == false)
-                            {
-                                dicLabelStartFinishLocation.Add(label, new LabelStartFinishLocation()
-                                {
-                                    Label = label,
-                                    StartLocation = new System.Drawing.Point(row, column)
-                                });
-                            }
                         }
                         else if (column == 0)
                         {
-                            ///il sütun komşuluklarından duvar olmayan ve en küçük etikete sahip olan seçilir.
+                            ///ilk sütun komşuluklarından duvar olmayan ve en küçük etikete sahip olan seçilir.
                             var neighbor1 = labelMap[row - 1, column];
-                            var neighbor2 = labelMap[row - 1, column + 1];
                             int tempLabel = 10000000;
 
-                            if (neighbor1 == 0 && neighbor2 == 0)
+                            if (neighbor1 == 0)
                             {
-                                if (dicLabelStartFinishLocation.ContainsKey(label) == false)
-                                {
-                                    dicLabelStartFinishLocation.Add(label, new LabelStartFinishLocation());
-                                }
-
-                                dicLabelStartFinishLocation[label].FinishLocation = new System.Drawing.Point(row, column);
                                 label++;
-
-                                if (dicLabelStartFinishLocation.ContainsKey(label) == false)
-                                {
-                                    dicLabelStartFinishLocation.Add(label, new LabelStartFinishLocation()
-                                    {
-                                        Label = label,
-                                        StartLocation = new System.Drawing.Point(row, column)
-                                    });
-                                }
-
                                 tempLabel = label;
                                 labelStack.Push(label);
                             }
@@ -107,88 +79,48 @@ namespace Yusuf_Ozkaplan
                                 tempLabel = neighbor1;
                             }
 
-                            if (neighbor2 != 0 && neighbor2 < tempLabel)
-                            {
-                                tempLabel = neighbor2;
-                            }
-
                             labelMap[row, column] = tempLabel;
                         }
                         else
                         {
                             ///Komşulardan En küçüğü seçilir.
                             int tempLabel = 10000000;
-                            bool isNewLabel = false;
 
-                            var neighbor = labelMap[row, column - 1];
-                            if (neighbor != 0 && neighbor < tempLabel)
+                            var neighborLeft = labelMap[row, column - 1];
+                            var neighborTop = labelMap[row - 1, column];
+                            var neighborTopLeft = labelMap[row - 1, column - 1];
+
+                            if (neighborLeft == 0 && neighborTop == 0)
                             {
-                                tempLabel = neighbor;
-                                isNewLabel = false;
-                            }
-                            else if (neighbor == 0)
-                            {
-                                isNewLabel = true;
-                            }
-
-                            for (int i = -1; i <= 1; i++)
-                            {
-                                if (column + i >= width)
-                                {
-                                    break;
-                                }
-
-                                neighbor = labelMap[row - 1, column + i];
-                                if (neighbor != 0 && neighbor < tempLabel)
-                                {
-                                    int oldLabel = tempLabel;                                   
-                                                                       
-                                    tempLabel = neighbor;
-                                    isNewLabel = isNewLabel && false;
-
-                                    if (oldLabel != 10000000)
-                                    {
-                                        if (dicLabelStartFinishLocation.ContainsKey(label) == false)
-                                        {
-                                            dicLabelStartFinishLocation.Add(label, new LabelStartFinishLocation());
-                                        }
-
-                                        dicLabelStartFinishLocation[oldLabel].FinishLocation = new System.Drawing.Point(row, column);
-                                        ChangeOldLabel(oldLabel, tempLabel);
-                                        labelStack.Pop();
-                                    }                                    
-                                }
-                                else if (neighbor == 0)
-                                {
-                                    isNewLabel = isNewLabel && true;
-                                }
-                            }
-
-                            ///Eski değerlerin tekrar güncellenmesi durumu varsa girer.
-                            if (isNewLabel)
-                            {
-                                if (dicLabelStartFinishLocation.ContainsKey(label) == false)
-                                {
-                                    dicLabelStartFinishLocation.Add(label, new LabelStartFinishLocation());
-                                }
-
-                                dicLabelStartFinishLocation[label].FinishLocation = new System.Drawing.Point(row, column);
                                 label++;
-
-                                if (dicLabelStartFinishLocation.ContainsKey(label) == false)
+                                labelMap[row, column] = label;
+                            }
+                            else
+                            {
+                                if (neighborLeft != 0 && neighborLeft < tempLabel)
                                 {
-                                    dicLabelStartFinishLocation.Add(label, new LabelStartFinishLocation()
-                                    {
-                                        Label = label,
-                                        StartLocation = new System.Drawing.Point(row, column)
-                                    });
+                                    tempLabel = neighborLeft;
                                 }
 
-                                tempLabel = label;
-                                labelStack.Push(label);
-                            }
+                                if (neighborTop != 0 && neighborTop < tempLabel)
+                                {
+                                    tempLabel = neighborTop;
+                                }
 
-                            labelMap[row, column] = tempLabel;
+                                if (neighborTopLeft != 0 && neighborTopLeft < tempLabel)
+                                {
+                                    tempLabel = neighborLeft;
+                                }
+
+                                
+
+                                if (neighborTop != 0 && neighborLeft != 0 && neighborTop < neighborLeft)
+                                {
+                                    ChangeOldLabel(row, column, neighborLeft, neighborTop);
+                                }
+
+                                labelMap[row, column] = tempLabel;
+                            }
                         }
                     }
                     else
@@ -199,49 +131,55 @@ namespace Yusuf_Ozkaplan
                             labelStack.Push(label);
                         }
                     }
-
-                    mapString += string.Concat(labelMap[row, column].ToString(), " ");
                 }
+            }   
 
-                mapString += "\n";
-            }
-
-            return dicLabelStartFinishLocation.Count;
+          return GetZoneCount();
         }
 
         /// <summary>
-        /// Komşulardan enküçğü seçildiğinde en büyük olarak setlenen lokasyonlar yeni değer ile tekrar etiketlenir.
+        /// Farklı olan etiketlerin sayısı toplam bölge sayısıdır.
         /// </summary>
-        /// <param name="oldLabel"></param>
-        /// <param name="newLabel"></param>
-        private void ChangeOldLabel(int oldLabel, int newLabel)
+        /// <returns></returns>
+        private int GetZoneCount()
         {
-            var value = dicLabelStartFinishLocation[label];
-            var startRow = value.StartLocation.X;
-            var finishRow = value.FinishLocation.X;
-            var startColumn = value.StartLocation.Y;
-            var finishColumn = value.FinishLocation.Y;
-
-            while (finishRow >= startRow)
+            List<int> listLabel = new List<int>();
+            for (int row = 0; row < height; row++)
             {
-                int tempColumn = 0;
-                if (startRow == finishRow)
+                for (int column = 0; column < width; column++)
                 {
-                    tempColumn = startColumn;
-                }
-
-                while (finishColumn >= tempColumn)
-                {
-                    if (labelMap[startRow, finishColumn] == oldLabel)
+                    var _label = labelMap[row, column];
+                    if (_label != 0 && listLabel.Contains(_label) == false)
                     {
-                        labelMap[startRow, finishColumn] = newLabel;
+                        listLabel.Add(_label);
+                    }
+                }
+            }
+
+            return listLabel.Count;
+        }
+
+        ///// <summary>
+        ///// Komşulardan enküçüğü seçildiğinde en büyük olarak setlenen lokasyonlar yeni değer ile tekrar etiketlenir.
+        ///// </summary>
+        ///// <param name="oldLabel"></param>
+        ///// <param name="newLabel"></param>
+        private void ChangeOldLabel(int row, int col, int oldLabel, int newLabel)
+        {
+            for (int i = 0; i <= row; i++)
+            {
+
+                int finishCount = i == row ? col : width;
+                int counter = 0;
+                while (counter < finishCount)
+                {
+                    if (labelMap[row, counter] == oldLabel)
+                    {
+                        labelMap[row, counter] = newLabel;
                     }
 
-                    finishColumn--;
+                    counter++;
                 }
-
-                finishColumn = width-1;
-                finishRow--;
             }
         }
     }

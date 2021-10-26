@@ -28,7 +28,7 @@ namespace Yusuf_Ozkaplan
 
 			///Calculate Map zone
 			ZoneCounter zoneCounter = new ZoneCounter();
-            zoneCounter.Init(mapInformation);
+			zoneCounter.Init(mapInformation);
 			int zoneCount = zoneCounter.Solve();
 
 			Console.WriteLine("Zone Count = " + zoneCount);
