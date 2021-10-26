@@ -1,0 +1,16 @@
+C:\Users\josef\OneDrive\Belgeler\GitHub\GeographicalZoneCounter\MapZoneCounter\obj\Debug\net5.0\MapZoneCounter.csproj.AssemblyReference.cache
+C:\Users\josef\OneDrive\Belgeler\GitHub\GeographicalZoneCounter\MapZoneCounter\obj\Debug\net5.0\MapZoneCounter.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\josef\OneDrive\Belgeler\GitHub\GeographicalZoneCounter\MapZoneCounter\obj\Debug\net5.0\MapZoneCounter.AssemblyInfoInputs.cache
+C:\Users\josef\OneDrive\Belgeler\GitHub\GeographicalZoneCounter\MapZoneCounter\obj\Debug\net5.0\MapZoneCounter.AssemblyInfo.cs
+C:\Users\josef\OneDrive\Belgeler\GitHub\GeographicalZoneCounter\MapZoneCounter\obj\Debug\net5.0\MapZoneCounter.csproj.CoreCompileInputs.cache
+C:\Users\josef\OneDrive\Belgeler\GitHub\GeographicalZoneCounter\MapZoneCounter\bin\Debug\net5.0\MapZoneCounter.exe
+C:\Users\josef\OneDrive\Belgeler\GitHub\GeographicalZoneCounter\MapZoneCounter\bin\Debug\net5.0\MapZoneCounter.deps.json
+C:\Users\josef\OneDrive\Belgeler\GitHub\GeographicalZoneCounter\MapZoneCounter\bin\Debug\net5.0\MapZoneCounter.runtimeconfig.json
+C:\Users\josef\OneDrive\Belgeler\GitHub\GeographicalZoneCounter\MapZoneCounter\bin\Debug\net5.0\MapZoneCounter.runtimeconfig.dev.json
+C:\Users\josef\OneDrive\Belgeler\GitHub\GeographicalZoneCounter\MapZoneCounter\bin\Debug\net5.0\MapZoneCounter.dll
+C:\Users\josef\OneDrive\Belgeler\GitHub\GeographicalZoneCounter\MapZoneCounter\bin\Debug\net5.0\ref\MapZoneCounter.dll
+C:\Users\josef\OneDrive\Belgeler\GitHub\GeographicalZoneCounter\MapZoneCounter\bin\Debug\net5.0\MapZoneCounter.pdb
+C:\Users\josef\OneDrive\Belgeler\GitHub\GeographicalZoneCounter\MapZoneCounter\obj\Debug\net5.0\MapZoneCounter.dll
+C:\Users\josef\OneDrive\Belgeler\GitHub\GeographicalZoneCounter\MapZoneCounter\obj\Debug\net5.0\ref\MapZoneCounter.dll
+C:\Users\josef\OneDrive\Belgeler\GitHub\GeographicalZoneCounter\MapZoneCounter\obj\Debug\net5.0\MapZoneCounter.pdb
+C:\Users\josef\OneDrive\Belgeler\GitHub\GeographicalZoneCounter\MapZoneCounter\obj\Debug\net5.0\MapZoneCounter.genruntimeconfig.cache
