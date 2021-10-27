@@ -143,6 +143,7 @@ namespace Yusuf_Ozkaplan
         /// <returns></returns>
         private int GetZoneCount()
         {
+            string mapString = string.Empty;
             List<int> listLabel = new List<int>();
             for (int row = 0; row < height; row++)
             {
@@ -153,7 +154,11 @@ namespace Yusuf_Ozkaplan
                     {
                         listLabel.Add(_label);
                     }
+
+                    mapString += string.Format("{0} ", _label);
                 }
+
+                mapString += string.Format("{0}", Environment.NewLine);
             }
 
             return listLabel.Count;
