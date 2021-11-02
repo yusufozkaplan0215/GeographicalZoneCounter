@@ -112,11 +112,23 @@ namespace Yusuf_Ozkaplan
                                     tempLabel = neighborLeft;
                                 }
 
-                                
 
-                                if (neighborTop != 0 && neighborLeft != 0 && neighborTop < neighborLeft)
+
+                                //if (neighborTop != 0 && neighborLeft != 0 && neighborTop < neighborLeft)
+                                //{
+                                //    ChangeOldLabel(row, column, neighborLeft, neighborTop);
+                                //}
+
+                                if (neighborTop != 0 && neighborLeft != 0)
                                 {
-                                    ChangeOldLabel(row, column, neighborLeft, neighborTop);
+                                    if (neighborTop < neighborLeft)
+                                    {
+                                        ChangeOldLabel(row, column, neighborLeft, neighborTop);
+                                    }
+                                    else if (neighborTop != neighborLeft && neighborTop > neighborLeft)
+                                    {
+                                        ChangeOldLabel(row, column, neighborTop, neighborLeft);
+                                    }
                                 }
 
                                 labelMap[row, column] = tempLabel;

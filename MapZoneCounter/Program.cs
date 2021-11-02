@@ -91,6 +91,7 @@ namespace Yusuf_Ozkaplan
 			mapInformation.SetBorder(16, 13);
 			mapInformation.SetBorder(16, 14);
 			mapInformation.SetBorder(16, 15);
+			//mapInformation.SetBorder(16, 16);
 			mapInformation.SetBorder(16, 26);
 			mapInformation.SetBorder(16, 30);
 
